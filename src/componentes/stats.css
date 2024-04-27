@@ -1,0 +1,17 @@
+.estadistica{
+    border-collapse: collapse;
+    width:50vw;
+    margin-bottom: 0.5vw;
+}
+.grafica{
+    width:75%;
+
+
+}
+.variables{
+    width: 25%;
+    height:40vh;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+}

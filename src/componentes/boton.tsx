@@ -3,7 +3,7 @@ import '../App.css';
 import './boton.css';
 import { propsBoton } from '../code/interfaces';
 import { formatColor } from '../code/helpers';
-import { hover } from '@testing-library/user-event/dist/hover';
+
 
 export function Boton(props: propsBoton) {
   return (
