@@ -1,0 +1,26 @@
+
+.botones{
+    display:flex;
+    margin-top: 8vh;
+    height: '100%';
+    width: '100%';
+    flex-direction: row;
+    margin-bottom: 7.4vh;
+}
+.botones div{
+    width: 15vw;
+    font-size: 1.2rem;
+    border-radius: 2vw;
+    text-align: center;
+    padding-top: 1vh;
+    padding-bottom: 2vh;
+}
+.botones div:hover{
+    scale: 1.1;
+    cursor: pointer
+}
+.camaras{
+    margin-top:8vh;
+    margin-left:auto;
+    margin-right:auto;
+}

@@ -4,3 +4,11 @@
     width: '100%';
     flex-direction: row;
 }
+.opciones div{
+    padding-top: 1vh;
+}
+
+.opciones div:hover{
+    scale: 1.1;
+    cursor:pointer;
+}

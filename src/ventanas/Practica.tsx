@@ -4,6 +4,8 @@ import './Practica.css';
 import Webcam from "react-webcam";
 import { propsVentanaPractica } from '../code/interfaces';
 import { Opciones } from '../componentes/headerventanas';
+import { ventana } from '../code/types';
+import { formatColor } from '../code/helpers';
 const FACING_MODE_USER = "user";
 const FACING_MODE_ENVIRONMENT = "environment";
 
@@ -15,12 +17,9 @@ let videoConstraints = {
 
 
 
-
-
-
-
 export function Practica(props: propsVentanaPractica) {
-  const [isCaptureEnable, setCaptureEnable] = useState<boolean>(false);
+  
+  const [isCaptureEnable, setCaptureEnable] = useState<boolean>(true);
   const webcamRef = useRef<Webcam>(null);
   const [url, setUrl] = useState<string | null>(null);
   const capture = useCallback(() => {
@@ -42,30 +41,73 @@ export function Practica(props: propsVentanaPractica) {
   return (
     <div className='Practica'>
 
-      <Opciones />
+      <Opciones setVentana={props.setVentana}/>
       
       {isCaptureEnable || (
         <button onClick={() => setCaptureEnable(true)}>start</button>
       )}
       {isCaptureEnable && (
         <>
+         {/*
           <div>
             <button onClick={() => setCaptureEnable(false)}>end </button>
             
           </div>
-          <div style={{alignContent:'center'}}>
+         */}
+          <div className='camaras' 
+          style={{border:'10px solid '+formatColor("azul"),
+                  width: '480px',
+                  height: '360px'
+                  }}>
             <Webcam
               audio={false}
-              width={540}
+              width={480}
               height={360}
               ref={webcamRef}
               screenshotFormat="image/jpeg"
               videoConstraints={{
+                
                 facingMode
               }}
             />
           </div>
-          
+          <div
+          style={{width:'500px',
+                  backgroundColor:formatColor("azul"),
+                  marginLeft:'auto',
+                  marginRight:'auto',
+                  textAlign:'center',
+                  paddingBottom:'1vh',
+                  color:formatColor("blanco")
+          }}><strong>Webcam</strong></div>
+          <div className='botones'>
+            <div
+            style={{color:formatColor("blanco"),
+                    backgroundColor:formatColor("azul"),
+                    marginLeft:'1vw'
+            }}><strong>Start record</strong></div>
+            <div
+            style={{color:formatColor("blanco"),
+                    backgroundColor:formatColor("azul"),
+                    marginLeft:'1vw'
+            }}><strong>Stop record</strong></div>
+            <div
+            style={{color:formatColor("blanco"),
+                    backgroundColor:formatColor("azul"),
+                    marginLeft:'5vw'
+            }}><strong>Start tracking</strong></div>
+            <div
+            style={{color:formatColor("blanco"),
+                    backgroundColor:formatColor("azul"),
+                    marginLeft:'1vw'
+            }}><strong>Stop tracking</strong></div>
+            <div
+            style={{color:formatColor("blanco"),
+                    backgroundColor:formatColor("azul"),
+                    marginLeft:'auto',
+                    marginRight:'1vw'
+            }} onClick={()=>props.setVentana("Inicio")}><strong>Volver al inicio</strong></div>
+          </div>
         </>
       )}
       
