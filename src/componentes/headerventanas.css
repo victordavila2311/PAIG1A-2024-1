@@ -10,5 +10,11 @@
 
 .opciones div:hover{
     scale: 1.1;
+    
     cursor:pointer;
+}
+
+.opciones div:last-child:hover{
+    transform: scale(1.1,1.1);
+    transform-origin: right;
 }
