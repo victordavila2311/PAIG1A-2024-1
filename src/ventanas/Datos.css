@@ -33,6 +33,6 @@ tr {
 .estadisticas{
     margin-left: 1vw;
     overflow: scroll;
-    height: 90vh;
+    height: 89vh;
     overflow-x: hidden;
 }
