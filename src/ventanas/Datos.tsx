@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {createContext, PropsWithChildren, useContext, useEffect, useRef, useState} from 'react';
 import '../App.css';
 import './Datos.css';
 import { propsVentanaDatos } from '../code/interfaces';
@@ -8,8 +8,46 @@ import { Records } from './objgrabaciones';
 import { Stats } from '../componentes/stats';
 
 export function Datos(props: propsVentanaDatos) {
-  
+  const [valor,setValor]=useState<string>('')
   let cant:number=4
+  // function leerPuerto(){
+    
+  //   navigator.serial
+  //   .requestPort({ filters: [{ usbVendorId }] })
+  //   .then((port) => {
+  //     // Connect to `port` or add it to the list of available ports.
+  //   })
+  //   .catch((e) => {
+  //     // The user didn't select a port.
+  //   });
+  // }
+  async function leerSerial(){
+    if("serial" in navigator){
+      
+    }
+    const port = await navigator.serial.requestPort()
+    await port.open({ baudRate: 115200, });
+    const textDecoder = new TextDecoderStream();
+    const readableStreamClosed = port.readable!.pipeTo(textDecoder.writable);
+    const reader = textDecoder.readable.getReader();
+
+    // Listen to data coming from the serial device.
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) {
+        // Allow the serial port to be closed later.
+        reader.releaseLock();
+        break;
+      }
+      // value is a string.
+      //console.log(value);
+      setValor(value)
+    }
+  }
+  
+  
+  
+
   return (
     <div className='Datos'>
       <Opciones setVentana={props.setVentana}/>
@@ -57,6 +95,12 @@ export function Datos(props: propsVentanaDatos) {
                     marginLeft:'auto',
                     marginRight:'1vw'
             }} onClick={()=>props.setVentana("Inicio")}><strong>Volver al inicio</strong></div>
+            <br />
+            <div onClick={()=>leerSerial()}
+            style={{color:formatColor("blanco"),
+                    backgroundColor:formatColor("verde"),
+                    marginLeft:'1vw',
+            }}><strong>leer Serial {valor}</strong></div>
           </div>
         </div>
         <div className='estadisticas'>
@@ -71,6 +115,7 @@ export function Datos(props: propsVentanaDatos) {
           <Stats/>
         </div>
       </div>
+      
     </div>
   );
 }
