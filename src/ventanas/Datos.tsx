@@ -30,18 +30,49 @@ export function Datos(props: propsVentanaDatos) {
     const textDecoder = new TextDecoderStream();
     const readableStreamClosed = port.readable!.pipeTo(textDecoder.writable);
     const reader = textDecoder.readable.getReader();
-
+    let msg: string=""
+    let start:boolean=false
+    let end:boolean=false
     // Listen to data coming from the serial device.
     while (true) {
       const { value, done } = await reader.read();
+      
       if (done) {
         // Allow the serial port to be closed later.
         reader.releaseLock();
         break;
       }
+
+      //se define el inicio del mensaje
+      if(value.includes("*")){
+        start=true
+      }
+
+      //se va agregando al mensaje que se encuentre entre los simbolos de inicio y fin
+      if(start){
+        msg+=value
+      }
+
+      //se define el final del mensaje
+      if(value.includes("#")){
+        end=true
+      }
       // value is a string.
       //console.log(value);
-      setValor(value)
+      if(end){
+        //se reemplaza el los caracteres que definen el inicio y fin del mensaje con
+        //strings vacias para no mostrarlo en pantalla
+
+        msg=msg.replace("/n","").replace(/[*#]/gi,"")
+
+        //se pone el valor en pantalla
+        setValor(msg)
+        //se reinician todos los valores para esperar el siguiente mensaje
+        msg=""
+        start=false
+        end=false
+      }
+      
     }
   }
   
