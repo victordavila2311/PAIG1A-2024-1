@@ -11,7 +11,7 @@ export function Inicio(props: propsVentanaInicio) {
     <div className='Inicio'>
       <header style={{color:formatColor("main"), fontSize:'2rem', height:'20vh'}}><strong>SIMULADOR DE<br/> LAPAROSCOPIA</strong></header>
       
-      <img src={require('../Img/CADsimulador.jpg')} alt="imagen simulador" style={{height:'56vh', borderRadius:'1vh'}} />
+      <img src={require('../Img/foto_prototipo.jpg')} alt="imagen simulador" style={{height:'56vh', borderRadius:'1vh'}} />
       <Boton
         color={'main'}
         texto={'Iniciar simulador'}
