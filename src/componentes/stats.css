@@ -8,6 +8,10 @@
 
 
 }
+#scene{
+    width:100%;
+    height: 100%;
+}
 .variables{
     width: 25%;
     height:40vh;

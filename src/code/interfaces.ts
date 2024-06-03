@@ -23,6 +23,13 @@ export interface propsBoton {
     onClick: () => void
 }
 
+export interface propsGraph{
+    x: number[]
+    y: number[]
+    z?: number[]
+
+}
+
 export interface objPractica { 
     
 }

@@ -1,15 +1,18 @@
 import React, {createContext, PropsWithChildren, useContext, useEffect, useRef, useState} from 'react';
 import '../App.css';
 import './Datos.css';
+import Plot from 'react-plotly.js';
 import { propsVentanaDatos } from '../code/interfaces';
 import { Opciones } from '../componentes/headerventanas';
 import { formatColor } from '../code/helpers';
 import { Records } from './objgrabaciones';
 import { Stats } from '../componentes/stats';
+import { datos } from './dataset';
 
 export function Datos(props: propsVentanaDatos) {
   const [valor,setValor]=useState<string>('')
   let cant:number=4
+  
   // function leerPuerto(){
     
   //   navigator.serial
