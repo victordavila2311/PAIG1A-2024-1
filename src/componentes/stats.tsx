@@ -29,7 +29,7 @@ export function Stats(){
                         return (
                             <div style={{
                                 border:'0.2vw solid '+formatColor("verde")
-                            }}>
+                            }} key={v}>
                                 {v}
                             </div>
                         )

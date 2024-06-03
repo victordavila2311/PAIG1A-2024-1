@@ -26,6 +26,7 @@ export function Grabaciones(props: propsVentanaGrabaciones) {
                     backgroundColor: formatColor("blanco"),
                     color: formatColor("cafe")
             }}>
+              <tbody>
               <tr style={{backgroundColor: formatColor("cafe"),
                           color: formatColor("blanco"),
                           border:'0',
@@ -37,10 +38,11 @@ export function Grabaciones(props: propsVentanaGrabaciones) {
                 <th>Nombre</th><th>Fecha</th><th>Duración</th>
               </tr>
               {Records.map((rec)=>{
-                return <tr>
+                return <tr key= {rec.nombre+rec.fecha}>
                   <td>{rec.nombre}</td><td>{rec.fecha}</td><td>{rec.duracion}</td>
                 </tr>
               })}
+              </tbody>
             </table>
           </div>
           <div className='botones'>

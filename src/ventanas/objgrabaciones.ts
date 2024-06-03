@@ -20,21 +20,6 @@ export const Records = [
         duracion: "02:15:00"
     },
     {
-        nombre: "Reunión de equipo",
-        fecha: "27/04/2024",
-        duracion: "01:30:00"
-    },
-    {
-        nombre: "Entrenamiento",
-        fecha: "28/04/2024",
-        duracion: "01:00:00"
-    },
-    {
-        nombre: "Presentación de proyecto",
-        fecha: "29/04/2024",
-        duracion: "02:15:00"
-    },
-    {
         nombre: "Llamada con cliente",
         fecha: "30/04/2024",
         duracion: "00:45:00"

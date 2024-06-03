@@ -36,7 +36,7 @@ export function Datos(props: propsVentanaDatos) {
     // Listen to data coming from the serial device.
     while (true) {
       const { value, done } = await reader.read();
-      
+      console.log(value)
       if (done) {
         // Allow the serial port to be closed later.
         reader.releaseLock();
@@ -96,6 +96,7 @@ export function Datos(props: propsVentanaDatos) {
                     backgroundColor: formatColor("blanco"),
                     color: formatColor("verde")
             }}>
+              <tbody>
               <tr style={{backgroundColor: formatColor("verde"),
                           color: formatColor("blanco"),
                           border:'0',
@@ -107,10 +108,11 @@ export function Datos(props: propsVentanaDatos) {
                 <th>Nombre</th><th>Fecha</th>
               </tr>
               {Records.map((rec)=>{
-                return (<tr>
+                return (<tr key= {rec.nombre+rec.fecha}>
                   <td>{rec.nombre}</td><td>{rec.fecha}</td>
                 </tr>)
               })}
+              </tbody>
             </table>
           </div>
           <div className='botones'>
