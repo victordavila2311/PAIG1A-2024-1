@@ -6,6 +6,7 @@ import { propsVentanaPractica } from '../code/interfaces';
 import { Opciones } from '../componentes/headerventanas';
 import { ventana } from '../code/types';
 import { formatColor } from '../code/helpers';
+import { datos } from './dataset';
 const FACING_MODE_USER = "user";
 const FACING_MODE_ENVIRONMENT = "environment";
 
@@ -21,6 +22,7 @@ export function Practica(props: propsVentanaPractica) {
   
   const [isCaptureEnable, setCaptureEnable] = useState<boolean>(true);
   const webcamRef = useRef<Webcam>(null);
+
   const [url, setUrl] = useState<string | null>(null);
   const capture = useCallback(() => {
     const imageSrc = webcamRef.current?.getScreenshot();
@@ -37,6 +39,27 @@ export function Practica(props: propsVentanaPractica) {
           : FACING_MODE_USER
     );
   }, []);
+  function creartexto(){
+    // Step 1: Define the text content
+    const textContent = JSON.stringify(datos);
+
+    // Step 2: Create a Blob object
+    const blob = new Blob([textContent], { type: 'text/plain' });
+
+    // Step 3: Create an object URL
+    const url = URL.createObjectURL(blob);
+
+    // Step 4: Create an anchor element
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'sample.txt';  // Specify the file name
+
+    // Step 5: Programmatically click the anchor element
+    a.click();
+
+    // Cleanup: Revoke the object URL after the download is triggered
+    URL.revokeObjectURL(url);
+  }
   
   return (
     <div className='Practica'>
@@ -100,7 +123,7 @@ export function Practica(props: propsVentanaPractica) {
             style={{color:formatColor("blanco"),
                     backgroundColor:formatColor("azul"),
                     marginLeft:'1vw'
-            }}><strong>Stop tracking</strong></div>
+            }} onClick={()=>{creartexto()}}><strong>Stop tracking</strong></div>
             <div
             style={{color:formatColor("blanco"),
                     backgroundColor:formatColor("azul"),

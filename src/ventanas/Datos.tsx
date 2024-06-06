@@ -67,7 +67,7 @@ export function Datos(props: propsVentanaDatos) {
         //strings vacias para no mostrarlo en pantalla
 
         msg=msg.replace("/n","").replace(/[*#]/gi,"")
-
+        
         //se pone el valor en pantalla
         setValor(msg)
         //se reinician todos los valores para esperar el siguiente mensaje
