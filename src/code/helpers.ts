@@ -22,5 +22,7 @@ export const formatColor = (color: color): string => {
             return '#FFFFFF'
         case 'negro': 
             return '#000000'
+        case 'verdeclaro':
+            return '#C7FFD4'
     }
 }

@@ -57,7 +57,7 @@ export function Stats(){
                         return (
                             <div style={{
                                 border:'0.2vw solid '+formatColor("verde"),
-                                backgroundColor: v===varActiva?formatColor("azul"):formatColor("blanco"),
+                                backgroundColor: v===varActiva?formatColor("verdeclaro"):formatColor("blanco"),
                                 cursor:'pointer'
                             }} key={v} onClick={()=>{
                                 setVarActiva(v)
