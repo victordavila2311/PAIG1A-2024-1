@@ -36,3 +36,26 @@ tr {
     height: 89vh;
     overflow-x: hidden;
 }
+
+
+.botones2{
+    display:flex;
+    margin-top: 8vh;
+    height: '100%';
+    width: '100%';
+    flex-direction: column;
+    margin-bottom: 7.4vh;
+}
+.botones2 div{
+    width: 15vw;
+    font-size: 1.2rem;
+    border-radius: 2vw;
+    margin-top: 1vh;
+    text-align: center;
+    padding-top: 1vh;
+    padding-bottom: 2vh;
+}
+.botones2 div:hover{
+    scale: 1.1;
+    cursor: pointer
+}

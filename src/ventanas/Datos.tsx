@@ -1,4 +1,4 @@
-import React, {createContext, PropsWithChildren, useContext, useEffect, useRef, useState} from 'react';
+import React, {ChangeEvent, createContext, PropsWithChildren, useContext, useEffect, useRef, useState} from 'react';
 import '../App.css';
 import './Datos.css';
 import Plot from 'react-plotly.js';
@@ -67,7 +67,7 @@ export function Datos(props: propsVentanaDatos) {
         //strings vacias para no mostrarlo en pantalla
 
         msg=msg.replace("/n","").replace(/[*#]/gi,"")
-        
+
         //se pone el valor en pantalla
         setValor(msg)
         //se reinician todos los valores para esperar el siguiente mensaje
@@ -78,7 +78,26 @@ export function Datos(props: propsVentanaDatos) {
       
     }
   }
-  
+  const [fileContent, setFileContent] = useState<string>('');
+  const [dragOver, setDragOver] = useState<boolean>(false);
+
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const input = event.target;
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const content = e.target?.result as string;
+        setFileContent(content);
+      };
+
+      reader.readAsText(file);
+    }
+  };
+  function handleButtonClick(){
+    document.getElementById('fileInput')?.click();
+  }
   
   
 
@@ -88,55 +107,37 @@ export function Datos(props: propsVentanaDatos) {
       <div className='contenido'>
         <div style={{display:'flex',
                      flexDirection:'column',
-                     width:'40vw',
+                     width:'20vw',
                      marginLeft: '5vw'
           }}>
-          <div style={{height:'67.3vh',
-                       overflowY:'scroll' 
-            }}>
-            <table className='tabla' 
-            style={{border:'0.2vw solid '+formatColor("verde"),
-                    backgroundColor: formatColor("blanco"),
-                    color: formatColor("verde")
-            }}>
-              <tbody>
-              <tr style={{backgroundColor: formatColor("verde"),
-                          color: formatColor("blanco"),
-                          border:'0',
-                          margin:'0'
-              }}>
-                <th colSpan={2}>Grabaciones Disponibles</th>
-              </tr>
-              <tr>
-                <th>Nombre</th><th>Fecha</th>
-              </tr>
-              {Records.map((rec)=>{
-                return (<tr key= {rec.nombre+rec.fecha}>
-                  <td>{rec.nombre}</td><td>{rec.fecha}</td>
-                </tr>)
-              })}
-              </tbody>
-            </table>
-          </div>
-          <div className='botones'>
-            <div
-            style={{color:formatColor("blanco"),
-                    backgroundColor:formatColor("verde"),
-                    marginLeft:'1vw'
-            }}><strong>Eliminar datos</strong></div>
-            
-            <div
-            style={{color:formatColor("blanco"),
-                    backgroundColor:formatColor("verde"),
-                    marginLeft:'auto',
-                    marginRight:'1vw'
-            }} onClick={()=>props.setVentana("Inicio")}><strong>Volver al inicio</strong></div>
-            <br />
-            <div onClick={()=>leerSerial()}
-            style={{color:formatColor("blanco"),
-                    backgroundColor:formatColor("verde"),
-                    marginLeft:'1vw',
-            }}><strong>leer Serial {valor}</strong></div>
+          
+          <div className='botones2'>
+            <input type="file" id="fileInput" onChange={handleFileChange} 
+                      style={{
+                        display:'none'}}>
+                          
+              </input>
+              <div onClick={handleButtonClick} style={{color:formatColor("blanco"),
+                                                    backgroundColor:formatColor("verde"),
+                                                    marginLeft:'1vw',
+                                                    }}>
+                  <strong>Escoga el archivo a analizar</strong>
+                </div>
+              <pre id="fileContent">{fileContent}</pre>
+              
+              
+              <div
+              style={{color:formatColor("blanco"),
+                      backgroundColor:formatColor("verde"),
+                      marginLeft:'1vw',
+                      marginRight:'1vw'
+              }} onClick={()=>props.setVentana("Inicio")}><strong>Volver al inicio</strong></div>
+              <br />
+              <div onClick={()=>leerSerial()}
+              style={{color:formatColor("blanco"),
+                      backgroundColor:formatColor("verde"),
+                      marginLeft:'1vw',
+              }}><strong>leer Serial {valor}</strong></div>
           </div>
         </div>
         <div className='estadisticas'>
