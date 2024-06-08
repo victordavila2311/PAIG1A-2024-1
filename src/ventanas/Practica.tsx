@@ -21,7 +21,12 @@ let videoConstraints = {
 export function Practica(props: propsVentanaPractica) {
   
   const [isCaptureEnable, setCaptureEnable] = useState<boolean>(true);
+  const [valor,setValor]=useState<string>('');
   const webcamRef = useRef<Webcam>(null);
+  const mediaRecorderRef:React.MutableRefObject<MediaRecorder|null> = useRef<MediaRecorder>(null);
+  const [capturing, setCapturing] = useState(false);
+  const [recordedChunks, setRecordedChunks] = useState([]);
+
 
   const [url, setUrl] = useState<string | null>(null);
   const capture = useCallback(() => {
@@ -39,6 +44,52 @@ export function Practica(props: propsVentanaPractica) {
           : FACING_MODE_USER
     );
   }, []);
+  //aca se crean las funciones para manejar la descarga de los videos tomados
+  const handleStartCaptureClick = React.useCallback(() => {
+    setCapturing(true);
+    mediaRecorderRef.current = new MediaRecorder(webcamRef.current?.stream!, {
+      mimeType: "video/webm"
+    });
+    mediaRecorderRef.current.addEventListener(
+      "dataavailable",
+      handleDataAvailable
+    );
+    mediaRecorderRef.current.start();
+  }, [webcamRef, setCapturing, mediaRecorderRef]);
+
+  const handleDataAvailable = React.useCallback(
+    ({ data }:{data: any}) => {
+      if (data.size > 0) {
+        setRecordedChunks((prev) => prev.concat(data));
+      }
+    },
+    [setRecordedChunks]
+  );
+
+  const handleStopCaptureClick = React.useCallback(() => {
+    mediaRecorderRef.current!.stop();
+    setCapturing(false);
+  }, [mediaRecorderRef, webcamRef, setCapturing]);
+
+  const handleDownload = React.useCallback(() => {
+    if (recordedChunks.length) {
+      const blob = new Blob(recordedChunks, {
+        type: "video/webm"
+      });
+      const url = URL.createObjectURL(blob);
+      const a:HTMLAnchorElement = document.createElement("a");
+      document.body.appendChild(a);
+      a.setAttribute('style','display: none')
+      a.href = url;
+      let fecha=new Date()
+      a.download = "grabacion_"+fecha.toString().substring(0,21).replace(" ","_")+".webm";
+      a.click();
+      window.URL.revokeObjectURL(url);
+      setRecordedChunks([]);
+    }
+  }, [recordedChunks]);
+
+
   function creartexto(){
     // Step 1: Define the text content
     const textContent = JSON.stringify(datos);
@@ -52,13 +103,69 @@ export function Practica(props: propsVentanaPractica) {
     // Step 4: Create an anchor element
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'sample.txt';  // Specify the file name
+    let fecha=new Date()
+    a.download = fecha.toString().substring(0,21).replace(" ","_")+'.txt';  // Specify the file name
 
     // Step 5: Programmatically click the anchor element
     a.click();
 
     // Cleanup: Revoke the object URL after the download is triggered
     URL.revokeObjectURL(url);
+  }
+
+  async function leerSerial(){
+    if("serial" in navigator){
+      
+    }
+    const port = await navigator.serial.requestPort()
+    await port.open({ baudRate: 115200, });
+    const textDecoder = new TextDecoderStream();
+    const readableStreamClosed = port.readable!.pipeTo(textDecoder.writable);
+    const reader = textDecoder.readable.getReader();
+    let msg: string=""
+    let start:boolean=false
+    let end:boolean=false
+    // Listen to data coming from the serial device.
+    while (true) {
+      const { value, done } = await reader.read();
+      console.log(value)
+      if (done) {
+        // Allow the serial port to be closed later.
+        reader.releaseLock();
+        break;
+      }
+
+      //se define el inicio del mensaje
+      if(value.includes("*")){
+        start=true
+      }
+
+      //se va agregando al mensaje que se encuentre entre los simbolos de inicio y fin
+      if(start){
+        msg+=value
+      }
+
+      //se define el final del mensaje
+      if(value.includes("#")){
+        end=true
+      }
+      // value is a string.
+      //console.log(value);
+      if(end){
+        //se reemplaza el los caracteres que definen el inicio y fin del mensaje con
+        //strings vacias para no mostrarlo en pantalla
+
+        msg=msg.replace("/n","").replace(/[*#]/gi,"")
+
+        //se pone el valor en pantalla
+        setValor(msg)
+        //se reinician todos los valores para esperar el siguiente mensaje
+        msg=""
+        start=false
+        end=false
+      }
+      
+    }
   }
   
   return (
@@ -108,17 +215,24 @@ export function Practica(props: propsVentanaPractica) {
             style={{color:formatColor("blanco"),
                     backgroundColor:formatColor("azul"),
                     marginLeft:'1vw'
-            }}><strong>Start record</strong></div>
+            }} onClick={handleStartCaptureClick}><strong>Start record {capturing?'🔴':'⚪'}</strong></div>
             <div
             style={{color:formatColor("blanco"),
                     backgroundColor:formatColor("azul"),
                     marginLeft:'1vw'
-            }}><strong>Stop record</strong></div>
+            }} onClick={handleStopCaptureClick}><strong>Stop record</strong></div>
+            {recordedChunks.length > 0 && (
+              <div onClick={handleDownload}
+              style={{color:formatColor("blanco"),
+                      backgroundColor:formatColor("azul"),
+                      marginLeft:'1vw'
+                      }}><strong>DESCARGAR</strong></div>
+            )}
             <div
             style={{color:formatColor("blanco"),
                     backgroundColor:formatColor("azul"),
-                    marginLeft:'5vw'
-            }}><strong>Start tracking</strong></div>
+                    marginLeft: recordedChunks.length > 0?'2vw':'5vw'
+            }} onClick={()=>leerSerial()}><strong>Start tracking</strong></div>
             <div
             style={{color:formatColor("blanco"),
                     backgroundColor:formatColor("azul"),
