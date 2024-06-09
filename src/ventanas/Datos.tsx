@@ -9,6 +9,9 @@ import { Records } from './objgrabaciones';
 import { Stats } from '../componentes/stats';
 import { datos } from './dataset';
 
+
+
+//export const fileContext=createContext<string>('[{"name":"hola"}]')
 export function Datos(props: propsVentanaDatos) {
   const [valor,setValor]=useState<string>('')
   let cant:number=4
@@ -24,6 +27,7 @@ export function Datos(props: propsVentanaDatos) {
   //     // The user didn't select a port.
   //   });
   // }
+  /*
   async function leerSerial(){
     if("serial" in navigator){
       
@@ -78,7 +82,8 @@ export function Datos(props: propsVentanaDatos) {
       
     }
   }
-  const [fileContent, setFileContent] = useState<string>('');
+    */
+  const [fileContent, setFileContent] = useState<string>('[{"name":"hola"}]');
   const [dragOver, setDragOver] = useState<boolean>(false);
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -99,7 +104,13 @@ export function Datos(props: propsVentanaDatos) {
     document.getElementById('fileInput')?.click();
   }
   
-  
+  function actualizar(){
+    let fc=fileContent
+    //console.log(fc)
+    fc=fc.replace("a","o")
+    //console.log(fc)
+    setFileContent(fc)
+  }
 
   return (
     <div className='Datos'>
@@ -124,7 +135,13 @@ export function Datos(props: propsVentanaDatos) {
                   <strong>Escoga el archivo a analizar</strong>
                 </div>
               <pre id="fileContent">{fileContent}</pre>
-              
+              <div
+              style={{color:formatColor("blanco"),
+                      backgroundColor:formatColor("verde"),
+                      marginLeft:'1vw',
+                      marginRight:'1vw'
+              }} onClick={()=>{actualizar()}}><strong>Actualizar</strong></div>
+              <br />
               
               <div
               style={{color:formatColor("blanco"),
@@ -133,23 +150,25 @@ export function Datos(props: propsVentanaDatos) {
                       marginRight:'1vw'
               }} onClick={()=>props.setVentana("Inicio")}><strong>Volver al inicio</strong></div>
               <br />
-              <div onClick={()=>leerSerial()}
+              {/*<div onClick={()=>leerSerial()}
               style={{color:formatColor("blanco"),
                       backgroundColor:formatColor("verde"),
                       marginLeft:'1vw',
-              }}><strong>leer Serial {valor}</strong></div>
+              }}><strong>leer Serial {valor}</strong></div>*/}
           </div>
         </div>
         <div className='estadisticas'>
+          {/*<fileContext.Provider value={fileContent}>*/}
           {(()=>{
               const stats:JSX.Element[]=[]
               for(let i=0;i<cant;i++){
-                stats.push( <Stats/>)
+                stats.push( <Stats fileCont={fileContent}  />)
               }
               return stats
             })()
           }
-          <Stats/>
+          <Stats fileCont={fileContent}/>
+          {/*</fileContext.Provider>*/}
         </div>
       </div>
       
