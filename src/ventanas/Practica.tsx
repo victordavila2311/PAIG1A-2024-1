@@ -7,6 +7,7 @@ import { Opciones } from '../componentes/headerventanas';
 import { ventana } from '../code/types';
 import { formatColor } from '../code/helpers';
 import { datos } from './dataset';
+import { readBuilderProgram } from 'typescript';
 const FACING_MODE_USER = "user";
 const FACING_MODE_ENVIRONMENT = "environment";
 
@@ -21,7 +22,7 @@ let videoConstraints = {
 export function Practica(props: propsVentanaPractica) {
   
   const [isCaptureEnable, setCaptureEnable] = useState<boolean>(true);
-  const [valor,setValor]=useState<string>('');
+  const [valor,setValor]=useState<string>("");
   const webcamRef = useRef<Webcam>(null);
   const mediaRecorderRef:React.MutableRefObject<MediaRecorder|null> = useRef<MediaRecorder>(null);
   const [capturing, setCapturing] = useState(false);
@@ -29,6 +30,9 @@ export function Practica(props: propsVentanaPractica) {
 
 
   const [url, setUrl] = useState<string | null>(null);
+
+  let reader:ReadableStreamDefaultReader<string>|null
+  let port:SerialPort|null
   const capture = useCallback(() => {
     const imageSrc = webcamRef.current?.getScreenshot();
     if (imageSrc) {
@@ -90,10 +94,21 @@ export function Practica(props: propsVentanaPractica) {
   }, [recordedChunks]);
 
 
-  function creartexto(){
+  async function creartexto(){
     // Step 1: Define the text content
-    const textContent = JSON.stringify(datos);
+    
+    await reader?.cancel();
+    console.log("cerrar")
+    reader = null;
+    port?.close()
+    port=null
+    
 
+    //const textContent = JSON.stringify(datos);
+    console.log(valor)
+    console.log(7,valor.replaceAll("\r","").replaceAll("\n","").split("}").slice(0,-1))
+    const textContent = `[${valor.replaceAll("\r","").replaceAll("\n","").split("}").slice(0,-1).join("},")}}]`
+    console.log(5,textContent)
     // Step 2: Create a Blob object
     const blob = new Blob([textContent], { type: 'text/plain' });
 
@@ -117,18 +132,19 @@ export function Practica(props: propsVentanaPractica) {
     if("serial" in navigator){
       
     }
-    const port = await navigator.serial.requestPort()
+    port = await navigator.serial.requestPort()
     await port.open({ baudRate: 115200, });
     const textDecoder = new TextDecoderStream();
     const readableStreamClosed = port.readable!.pipeTo(textDecoder.writable);
-    const reader = textDecoder.readable.getReader();
+    reader = textDecoder.readable.getReader();
     let msg: string=""
     let start:boolean=false
     let end:boolean=false
     // Listen to data coming from the serial device.
     while (true) {
+      console.log("F")
       const { value, done } = await reader.read();
-      console.log(value)
+      //console.log(value)
       if (done) {
         // Allow the serial port to be closed later.
         reader.releaseLock();
@@ -154,11 +170,14 @@ export function Practica(props: propsVentanaPractica) {
       if(end){
         //se reemplaza el los caracteres que definen el inicio y fin del mensaje con
         //strings vacias para no mostrarlo en pantalla
-
-        msg=msg.replace("/n","").replace(/[*#]/gi,"")
+        console.log("mensaje previo")
+        console.log(1,msg)
+        msg=msg.replaceAll("/n","").replaceAll(/[*#]/gi,"")
 
         //se pone el valor en pantalla
-        setValor(msg)
+        console.log("mensaje despues")
+        console.log(2,msg)
+        setValor(prev=>prev+msg)
         //se reinician todos los valores para esperar el siguiente mensaje
         msg=""
         start=false
@@ -167,6 +186,9 @@ export function Practica(props: propsVentanaPractica) {
       
     }
   }
+  useEffect(()=>{
+    console.log(valor)
+  },[JSON.stringify(valor)])
   
   return (
     <div className='Practica'>
@@ -232,7 +254,7 @@ export function Practica(props: propsVentanaPractica) {
             style={{color:formatColor("blanco"),
                     backgroundColor:formatColor("azul"),
                     marginLeft: recordedChunks.length > 0?'2vw':'5vw'
-            }} onClick={()=>leerSerial()}><strong>Start tracking</strong></div>
+            }} onClick={()=>leerSerial()}><strong>Start tracking {valor}</strong></div>
             <div
             style={{color:formatColor("blanco"),
                     backgroundColor:formatColor("azul"),

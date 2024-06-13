@@ -13,6 +13,7 @@ import { P2d } from "./plots/2d";
 
 export function Stats(file:{fileCont: string}){
     //const fileCont=useContext(fileContext)
+    
     const [varActiva, setVarActiva] = useState<string>('3D');
     const [ang1,setAng1]=useState<number[]>([])
     const [ang2,setAng2]=useState<number[]>([])
@@ -63,8 +64,12 @@ export function Stats(file:{fileCont: string}){
         // setx([])
         // sety([])
         // sett([])
+        
+        
+    },[file.fileCont])
+    useEffect(()=>{
         if("Angulo1" in dat[0]){
-            //console.log("entro")
+            console.log("entro")
             dat.forEach((data:datojson)=>{
                 tempang1.push(data["Angulo1"])
                 tempang2.push(data["Angulo2"])
@@ -81,10 +86,9 @@ export function Stats(file:{fileCont: string}){
             sety(tempy)
             sett(tempt)
             
-            setText(file.fileCont.slice(0,20))
+            setText(file.fileCont.slice(0,25))
         }
-        
-    },[file.fileCont])
+    },[dat])
     
     
     /*

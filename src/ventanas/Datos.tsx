@@ -162,12 +162,12 @@ export function Datos(props: propsVentanaDatos) {
           {(()=>{
               const stats:JSX.Element[]=[]
               for(let i=0;i<cant;i++){
-                stats.push( <Stats fileCont={fileContent}  />)
+                stats.push( <Stats key={`Stats${i}`} fileCont={fileContent}  />)
               }
               return stats
             })()
           }
-          <Stats fileCont={fileContent}/>
+          <Stats key={`StatsAlone${cant}`} fileCont={fileContent}/>
           {/*</fileContext.Provider>*/}
         </div>
       </div>
