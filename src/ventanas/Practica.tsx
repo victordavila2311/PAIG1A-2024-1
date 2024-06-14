@@ -254,7 +254,7 @@ export function Practica(props: propsVentanaPractica) {
             style={{color:formatColor("blanco"),
                     backgroundColor:formatColor("azul"),
                     marginLeft: recordedChunks.length > 0?'2vw':'5vw'
-            }} onClick={()=>leerSerial()}><strong>Start tracking {valor}</strong></div>
+            }} onClick={()=>leerSerial()}><strong>Start tracking </strong></div>
             <div
             style={{color:formatColor("blanco"),
                     backgroundColor:formatColor("azul"),
