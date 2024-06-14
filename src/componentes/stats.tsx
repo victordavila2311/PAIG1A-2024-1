@@ -23,9 +23,9 @@ export function Stats(file:{fileCont: string}){
     const [t,sett]=useState<number[]>([])
     const [dat,setDat] = useState<datojson[]>([{
         "data": 0,
-        "Angulo1": 0,
-        "Angulo2": 0,
-        "Distancia": 0
+        "A1": 0,
+        "A2": 0,
+        "D": 0
     }
     ])
     const [text, setText] = useState<string>("")
@@ -68,15 +68,17 @@ export function Stats(file:{fileCont: string}){
         
     },[file.fileCont])
     useEffect(()=>{
-        if("Angulo1" in dat[0]){
+        if("A1" in dat[0]){
             console.log("entro")
-            dat.forEach((data:datojson)=>{
-                tempang1.push(data["Angulo1"])
-                tempang2.push(data["Angulo2"])
-                tempdist.push(data["Distancia"])
-                tempx.push(Math.cos(data["Angulo1"]))
-                tempy.push(Math.sin(data["Angulo2"]))
-                tempt.push(data["data"]*0.1)
+            dat.forEach((data:datojson, idx)=>{
+                tempang1.push(data["A1"])
+                tempang2.push(data["A2"])
+                tempdist.push(data["D"])
+                tempx.push(Math.cos(data["A1"]))
+                tempy.push(Math.sin(data["A2"]))
+                
+                tempt.push(idx*0.1)
+                
         
             })
             setAng1(tempang1)
