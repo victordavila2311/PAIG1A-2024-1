@@ -107,7 +107,8 @@ export function Practica(props: propsVentanaPractica) {
     //const textContent = JSON.stringify(datos);
     console.log(valor)
     console.log(7,valor.replaceAll("\r","").replaceAll("\n","").split("}").slice(0,-1))
-    const textContent = `[${valor.replaceAll("\r","").replaceAll("\n","").split("}").slice(0,-1).join("},")}}]`.replaceAll("{","{\"").replaceAll(":","\":").replaceAll(",A",",\"A").replaceAll(",D",",\"D")
+    //const textContent = `[${valor.replaceAll("\r","").replaceAll("\n","").split("}").slice(0,-1).join("},")}}]`.replaceAll("{","{\"").replaceAll(":","\":").replaceAll(",A",",\"A").replaceAll(",D",",\"D")
+    const textContent = `[${valor.replaceAll("\r","").replaceAll("\n","").split("}").slice(0,-1).join("},")}}]`//.replaceAll("{","{\"").replaceAll(":","\":").replaceAll(",A",",\"A").replaceAll(",D",",\"D")
     console.log(5,textContent)
     // Step 2: Create a Blob object
     const blob = new Blob([textContent], { type: 'text/plain' });
