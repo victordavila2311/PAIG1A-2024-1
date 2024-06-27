@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/PAIG1A-2024-1/static/css/main.e71964b9.css",
-    "main.js": "/PAIG1A-2024-1/static/js/main.cf333ca1.js",
+    "main.css": "/PAIG1A-2024-1/static/css/main.07969328.css",
+    "main.js": "/PAIG1A-2024-1/static/js/main.3af0a7fa.js",
     "static/media/FondoInicio.png": "/PAIG1A-2024-1/static/media/FondoInicio.9a2f4062960098a1d1d9.png",
     "static/media/FondoDatos.jpg": "/PAIG1A-2024-1/static/media/FondoDatos.48c64ea0d7fb14c10025.jpg",
     "static/media/foto_prototipo.jpg": "/PAIG1A-2024-1/static/media/foto_prototipo.90370897a5e81e8fcb0b.jpg",
     "static/media/FondoPractica.jpg": "/PAIG1A-2024-1/static/media/FondoPractica.3a3e78a63bb2930ffb72.jpg",
     "static/media/FondoGrabaciones.jpg": "/PAIG1A-2024-1/static/media/FondoGrabaciones.8775f192845935b64059.jpg",
     "index.html": "/PAIG1A-2024-1/index.html",
-    "main.e71964b9.css.map": "/PAIG1A-2024-1/static/css/main.e71964b9.css.map",
-    "main.cf333ca1.js.map": "/PAIG1A-2024-1/static/js/main.cf333ca1.js.map"
+    "main.07969328.css.map": "/PAIG1A-2024-1/static/css/main.07969328.css.map",
+    "main.3af0a7fa.js.map": "/PAIG1A-2024-1/static/js/main.3af0a7fa.js.map"
   },
   "entrypoints": [
-    "static/css/main.e71964b9.css",
-    "static/js/main.cf333ca1.js"
+    "static/css/main.07969328.css",
+    "static/js/main.3af0a7fa.js"
   ]
 }
