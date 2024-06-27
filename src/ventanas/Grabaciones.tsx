@@ -42,7 +42,7 @@ export function Grabaciones(props: propsVentanaGrabaciones) {
               color: formatColor("blanco"),
               backgroundColor: formatColor("cafe"),
               marginLeft: '1vw'
-            }} onClick={videoSrc ? borrarGrabacion : handleButtonClick}><strong>{videoSrc ? 'Limpiar visor' : 'Cargar grabacion'}</strong></div>
+            }} onClick={videoSrc ? borrarGrabacion : handleButtonClick}><strong>{videoSrc ? 'Limpiar visor' : 'Cargar grabación'}</strong></div>
 
           <div
             style={{

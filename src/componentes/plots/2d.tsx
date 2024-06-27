@@ -19,14 +19,14 @@ export function P2d(props: propsGraph) {
             ]}
 
             layout={{
-                width: 500, height: 240, autosize: true,
+                width: 700, height: 500, autosize: true,
                 margin: {
                     l: 30,
                     r: 10,
                     b: 30,
                     t: 20,
                     pad: 0
-                },xaxis:{title:"tiempo (s)"}
+                }, xaxis: { title: "tiempo (s)" }
             }}
         />
     )

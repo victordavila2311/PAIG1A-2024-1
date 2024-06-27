@@ -1,4 +1,4 @@
-import React, {ChangeEvent, createContext, PropsWithChildren, useContext, useEffect, useRef, useState} from 'react';
+import React, { ChangeEvent, createContext, PropsWithChildren, useContext, useEffect, useRef, useState } from 'react';
 import '../App.css';
 import './Datos.css';
 import Plot from 'react-plotly.js';
@@ -13,11 +13,11 @@ import { datos } from './dataset';
 
 //export const fileContext=createContext<string>('[{"name":"hola"}]')
 export function Datos(props: propsVentanaDatos) {
-  const [valor,setValor]=useState<string>('')
-  let cant:number=4
-  
+  const [valor, setValor] = useState<string>('')
+  let cant: number = 4
+
   // function leerPuerto(){
-    
+
   //   navigator.serial
   //   .requestPort({ filters: [{ usbVendorId }] })
   //   .then((port) => {
@@ -100,78 +100,42 @@ export function Datos(props: propsVentanaDatos) {
       reader.readAsText(file);
     }
   };
-  function handleButtonClick(){
+  function handleButtonClick() {
     document.getElementById('fileInput')?.click();
-  }
-  
-  function actualizar(){
-    let fc=fileContent
-    //console.log(fc)
-    fc=fc.replace("a","o")
-    //console.log(fc)
-    setFileContent(fc)
   }
 
   return (
     <div className='Datos'>
-      <Opciones setVentana={props.setVentana}/>
-      <div className='contenido'>
-        <div style={{display:'flex',
-                     flexDirection:'column',
-                     width:'20vw',
-                     marginLeft: '5vw'
+
+      <Opciones setVentana={props.setVentana} />
+      <div style={{ display: 'flex', flexDirection: 'row' }}>
+        <div className='botones'>
+          <input type="file" id="fileInput" onChange={handleFileChange}
+            style={{
+              display: 'none'
+            }}>
+
+          </input>
+          <div onClick={handleButtonClick} style={{
+            color: formatColor("blanco"),
+            backgroundColor: formatColor("verde"),
           }}>
-          
-          <div className='botones2'>
-            <input type="file" id="fileInput" onChange={handleFileChange} 
-                      style={{
-                        display:'none'}}>
-                          
-              </input>
-              <div onClick={handleButtonClick} style={{color:formatColor("blanco"),
-                                                    backgroundColor:formatColor("verde"),
-                                                    marginLeft:'1vw',
-                                                    }}>
-                  <strong>Escoga el archivo a analizar</strong>
-                </div>
-              <pre id="fileContent">{fileContent}</pre>
-              <div
-              style={{color:formatColor("blanco"),
-                      backgroundColor:formatColor("verde"),
-                      marginLeft:'1vw',
-                      marginRight:'1vw'
-              }} onClick={()=>{actualizar()}}><strong>Actualizar</strong></div>
-              <br />
-              
-              <div
-              style={{color:formatColor("blanco"),
-                      backgroundColor:formatColor("verde"),
-                      marginLeft:'1vw',
-                      marginRight:'1vw'
-              }} onClick={()=>props.setVentana("Inicio")}><strong>Volver al inicio</strong></div>
-              <br />
-              {/*<div onClick={()=>leerSerial()}
-              style={{color:formatColor("blanco"),
-                      backgroundColor:formatColor("verde"),
-                      marginLeft:'1vw',
-              }}><strong>leer Serial {valor}</strong></div>*/}
+            <strong>Escoger archivo</strong>
           </div>
+
+          <div
+            style={{
+              color: formatColor("blanco"),
+              backgroundColor: formatColor("verde"),
+              marginLeft: '1vw',
+              marginRight: '1vw'
+            }} onClick={() => props.setVentana("Inicio")}><strong>Volver al inicio</strong></div>
         </div>
-        <div className='estadisticas'>
-          {/*<fileContext.Provider value={fileContent}>*/}
-          {(()=>{
-              const stats:JSX.Element[]=[]
-              for(let i=0;i<cant;i++){
-                stats.push( <Stats key={`Stats${i}`} fileCont={fileContent}  />)
-              }
-              return stats
-            })()
-          }
-          <Stats key={`StatsAlone${cant}`} fileCont={fileContent}/>
-          {/*</fileContext.Provider>*/}
+
+        <div style={{ marginLeft: 50, backgroundColor: formatColor("verde"), marginTop: 50, borderRadius: 20, height: '70vh', width: '100%' }}>
+          <Stats key={`StatsAlone${cant}`} fileCont={fileContent} />
         </div>
       </div>
-      
     </div>
   );
 }
