@@ -11,7 +11,7 @@ export function Opciones(props: propsVentanaInicio){
             width:w, 
             textAlign:'center', height:'5vh',
             color:formatColor("blanco")}} 
-            onClick={() => props.setVentana('Practica')}><strong>Practica</strong></div>
+            onClick={() => props.setVentana('Practica')}><strong>Práctica</strong></div>
             <div style={{backgroundColor:formatColor("cafe"), 
             width:w, 
             textAlign:'center', 

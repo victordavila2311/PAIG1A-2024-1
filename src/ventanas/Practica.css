@@ -1,26 +1,28 @@
-
-.botones{
-    display:flex;
-    margin-top: 8vh;
+.botones {
+    display: flex;
     height: '100%';
     width: '100%';
-    flex-direction: row;
-    margin-bottom: 7.4vh;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
-.botones div{
+
+.botones div {
     width: 15vw;
     font-size: 1.2rem;
     border-radius: 2vw;
     text-align: center;
-    padding-top: 1vh;
-    padding-bottom: 2vh;
+    padding: 1vh;
+    margin: 10px;
 }
-.botones div:hover{
+
+.botones div:hover {
     scale: 1.1;
     cursor: pointer
 }
-.camaras{
-    margin-top:8vh;
-    margin-left:auto;
-    margin-right:auto;
+
+.camaras {
+    margin-top: 8vh;
+    margin-left: auto;
+    margin-right: auto;
 }

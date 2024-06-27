@@ -1,4 +1,4 @@
-import React,{useRef, useEffect, useState, useCallback} from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import '../App.css';
 import './Practica.css';
 import Webcam from "react-webcam";
@@ -20,19 +20,18 @@ let videoConstraints = {
 
 
 export function Practica(props: propsVentanaPractica) {
-  
-  const [isCaptureEnable, setCaptureEnable] = useState<boolean>(true);
-  const [valor,setValor]=useState<string>("");
+
+  const [valor, setValor] = useState<string>("");
   const webcamRef = useRef<Webcam>(null);
-  const mediaRecorderRef:React.MutableRefObject<MediaRecorder|null> = useRef<MediaRecorder>(null);
+  const mediaRecorderRef: React.MutableRefObject<MediaRecorder | null> = useRef<MediaRecorder>(null);
   const [capturing, setCapturing] = useState(false);
   const [recordedChunks, setRecordedChunks] = useState([]);
 
 
   const [url, setUrl] = useState<string | null>(null);
 
-  let reader:ReadableStreamDefaultReader<string>|null
-  let port:SerialPort|null
+  let reader: ReadableStreamDefaultReader<string> | null
+  let port: SerialPort | null
   const capture = useCallback(() => {
     const imageSrc = webcamRef.current?.getScreenshot();
     if (imageSrc) {
@@ -62,7 +61,7 @@ export function Practica(props: propsVentanaPractica) {
   }, [webcamRef, setCapturing, mediaRecorderRef]);
 
   const handleDataAvailable = React.useCallback(
-    ({ data }:{data: any}) => {
+    ({ data }: { data: any }) => {
       if (data.size > 0) {
         setRecordedChunks((prev) => prev.concat(data));
       }
@@ -81,12 +80,12 @@ export function Practica(props: propsVentanaPractica) {
         type: "video/webm"
       });
       const url = URL.createObjectURL(blob);
-      const a:HTMLAnchorElement = document.createElement("a");
+      const a: HTMLAnchorElement = document.createElement("a");
       document.body.appendChild(a);
-      a.setAttribute('style','display: none')
+      a.setAttribute('style', 'display: none')
       a.href = url;
-      let fecha=new Date()
-      a.download = "grabacion_"+fecha.toString().substring(0,21).replace(" ","_")+".webm";
+      let fecha = new Date()
+      a.download = "grabacion_" + fecha.toString().substring(0, 21).replace(" ", "_") + ".webm";
       a.click();
       window.URL.revokeObjectURL(url);
       setRecordedChunks([]);
@@ -94,22 +93,18 @@ export function Practica(props: propsVentanaPractica) {
   }, [recordedChunks]);
 
 
-  async function creartexto(){
+  async function creartexto() {
     // Step 1: Define the text content
-    
+
     await reader?.cancel();
-    console.log("cerrar")
     reader = null;
     port?.close()
-    port=null
-    
+    port = null
+
 
     //const textContent = JSON.stringify(datos);
-    console.log(valor)
-    console.log(7,valor.replaceAll("\r","").replaceAll("\n","").split("}").slice(0,-1))
     //const textContent = `[${valor.replaceAll("\r","").replaceAll("\n","").split("}").slice(0,-1).join("},")}}]`.replaceAll("{","{\"").replaceAll(":","\":").replaceAll(",A",",\"A").replaceAll(",D",",\"D")
-    const textContent = `[${valor.replaceAll("\r","").replaceAll("\n","").split("}").slice(0,-1).join("},")}}]`//.replaceAll("{","{\"").replaceAll(":","\":").replaceAll(",A",",\"A").replaceAll(",D",",\"D")
-    console.log(5,textContent)
+    const textContent = `[${valor.replaceAll("\r", "").replaceAll("\n", "").split("}").slice(0, -1).join("},")}}]`//.replaceAll("{","{\"").replaceAll(":","\":").replaceAll(",A",",\"A").replaceAll(",D",",\"D")
     // Step 2: Create a Blob object
     const blob = new Blob([textContent], { type: 'text/plain' });
 
@@ -119,8 +114,8 @@ export function Practica(props: propsVentanaPractica) {
     // Step 4: Create an anchor element
     const a = document.createElement('a');
     a.href = url;
-    let fecha=new Date()
-    a.download = fecha.toString().substring(0,21).replace(" ","_")+'.txt';  // Specify the file name
+    let fecha = new Date()
+    a.download = fecha.toString().substring(0, 21).replace(" ", "_") + '.txt';  // Specify the file name
 
     // Step 5: Programmatically click the anchor element
     a.click();
@@ -129,23 +124,21 @@ export function Practica(props: propsVentanaPractica) {
     URL.revokeObjectURL(url);
   }
 
-  async function leerSerial(){
-    if("serial" in navigator){
-      
+  async function leerSerial() {
+    if ("serial" in navigator) {
+
     }
     port = await navigator.serial.requestPort()
     await port.open({ baudRate: 115200, });
     const textDecoder = new TextDecoderStream();
     const readableStreamClosed = port.readable!.pipeTo(textDecoder.writable);
     reader = textDecoder.readable.getReader();
-    let msg: string=""
-    let start:boolean=false
-    let end:boolean=false
+    let msg: string = ""
+    let start: boolean = false
+    let end: boolean = false
     // Listen to data coming from the serial device.
     while (true) {
-      console.log("F")
       const { value, done } = await reader.read();
-      //console.log(value)
       if (done) {
         // Allow the serial port to be closed later.
         reader.releaseLock();
@@ -153,124 +146,103 @@ export function Practica(props: propsVentanaPractica) {
       }
 
       //se define el inicio del mensaje
-      if(value.includes("*")){
-        start=true
+      if (value.includes("*")) {
+        start = true
       }
 
       //se va agregando al mensaje que se encuentre entre los simbolos de inicio y fin
-      if(start){
-        msg+=value
+      if (start) {
+        msg += value
       }
 
       //se define el final del mensaje
-      if(value.includes("#")){
-        end=true
+      if (value.includes("#")) {
+        end = true
       }
       // value is a string.
-      //console.log(value);
-      if(end){
+      if (end) {
         //se reemplaza el los caracteres que definen el inicio y fin del mensaje con
         //strings vacias para no mostrarlo en pantalla
-        console.log("mensaje previo")
-        console.log(1,msg)
-        msg=msg.replaceAll("/n","").replaceAll(/[*#]/gi,"")
+        msg = msg.replaceAll("/n", "").replaceAll(/[*#]/gi, "")
 
         //se pone el valor en pantalla
-        console.log("mensaje despues")
-        console.log(2,msg)
-        setValor(prev=>prev+msg)
+        setValor(prev => prev + msg)
         //se reinician todos los valores para esperar el siguiente mensaje
-        msg=""
-        start=false
-        end=false
+        msg = ""
+        start = false
+        end = false
       }
-      
+
     }
   }
-  useEffect(()=>{
-    console.log(valor)
-  },[JSON.stringify(valor)])
-  
+
   return (
     <div className='Practica'>
 
-      <Opciones setVentana={props.setVentana}/>
-      
-      {isCaptureEnable || (
-        <button onClick={() => setCaptureEnable(true)}>start</button>
-      )}
-      {isCaptureEnable && (
-        <>
-         {/*
-          <div>
-            <button onClick={() => setCaptureEnable(false)}>end </button>
-            
-          </div>
-         */}
-          <div className='camaras' 
-          style={{border:'10px solid '+formatColor("azul"),
-                  width: '480px',
-                  height: '360px'
-                  }}>
+      <Opciones setVentana={props.setVentana} />
+
+      <div style={{ display: 'flex', flexDirection: 'row' }}>
+        <div className='botones'>
+          <div
+            style={{
+              color: formatColor("blanco"),
+              backgroundColor: formatColor("azul"),
+            }} onClick={
+              capturing ? () => {
+                handleStopCaptureClick();
+                creartexto();
+              }
+                : () => {
+                  leerSerial();
+                  handleStartCaptureClick();
+                }
+            }><strong>
+              {capturing ? 'Detener 🔴' : 'Iniciar ⚪'}
+            </strong></div>
+          {recordedChunks.length > 0 && (
+            <div onClick={handleDownload}
+              style={{
+                color: formatColor("blanco"),
+                backgroundColor: formatColor("azul"),
+              }}><strong>Descargar Video</strong></div>
+          )}
+          <div
+            style={{
+              color: formatColor("blanco"),
+              backgroundColor: formatColor("azul"),
+            }} onClick={() => props.setVentana("Inicio")}><strong>Volver al inicio</strong></div>
+        </div>
+        <div style={{marginLeft: 50, backgroundColor: formatColor("azul"), marginTop: 50, borderRadius: 20}}>
+          <div className='camaras'
+            style={{
+              border: '10px solid ' + formatColor("azul"),
+              width: 900,
+              height: 550,
+            }}>
             <Webcam
               audio={false}
-              width={480}
-              height={360}
+              width={'100%'}
+              height={'100%'}
               ref={webcamRef}
               screenshotFormat="image/jpeg"
               videoConstraints={{
-                
                 facingMode
               }}
+              mirrored={true}
             />
           </div>
           <div
-          style={{width:'500px',
-                  backgroundColor:formatColor("azul"),
-                  marginLeft:'auto',
-                  marginRight:'auto',
-                  textAlign:'center',
-                  paddingBottom:'1vh',
-                  color:formatColor("blanco")
-          }}><strong>Webcam</strong></div>
-          <div className='botones'>
-            <div
-            style={{color:formatColor("blanco"),
-                    backgroundColor:formatColor("azul"),
-                    marginLeft:'1vw'
-            }} onClick={handleStartCaptureClick}><strong>Start record {capturing?'🔴':'⚪'}</strong></div>
-            <div
-            style={{color:formatColor("blanco"),
-                    backgroundColor:formatColor("azul"),
-                    marginLeft:'1vw'
-            }} onClick={handleStopCaptureClick}><strong>Stop record</strong></div>
-            {recordedChunks.length > 0 && (
-              <div onClick={handleDownload}
-              style={{color:formatColor("blanco"),
-                      backgroundColor:formatColor("azul"),
-                      marginLeft:'1vw'
-                      }}><strong>DESCARGAR</strong></div>
-            )}
-            <div
-            style={{color:formatColor("blanco"),
-                    backgroundColor:formatColor("azul"),
-                    marginLeft: recordedChunks.length > 0?'2vw':'5vw'
-            }} onClick={()=>leerSerial()}><strong>Start tracking </strong></div>
-            <div
-            style={{color:formatColor("blanco"),
-                    backgroundColor:formatColor("azul"),
-                    marginLeft:'1vw'
-            }} onClick={()=>{creartexto()}}><strong>Stop tracking</strong></div>
-            <div
-            style={{color:formatColor("blanco"),
-                    backgroundColor:formatColor("azul"),
-                    marginLeft:'auto',
-                    marginRight:'1vw'
-            }} onClick={()=>props.setVentana("Inicio")}><strong>Volver al inicio</strong></div>
-          </div>
-        </>
-      )}
-      
+            style={{
+              width: '100%',
+              backgroundColor: formatColor("azul"),
+              marginLeft: 'auto',
+              marginRight: 'auto',
+              textAlign: 'center',
+              paddingBottom: '1vh',
+              color: formatColor("blanco")
+            }}><strong>Webcam</strong></div>
+        </div>
+      </div>
     </div>
   );
 }

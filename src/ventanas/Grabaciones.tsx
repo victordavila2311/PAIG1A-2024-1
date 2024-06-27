@@ -20,68 +20,60 @@ export function Grabaciones(props: propsVentanaGrabaciones) {
       alert("Please upload a WebM video file.");
     }
   };
-  function handleButtonClick(){
+  function handleButtonClick() {
     document.getElementById('videoInput')?.click();
   }
-  function borrarGrabacion(){
+  function borrarGrabacion() {
     setVideoSrc(null)
   }
 
-  
+
   return (
     <div className='Grabaciones'>
-      <Opciones setVentana={props.setVentana}/>
-      <div className='contenido'>
-        <div style={{display:'flex',
-                     flexDirection:'column',
-                     width:'20vw',
-                     marginLeft: '5vw',
-                     height:'89.5vh'
-              }}>
-          
-          <div className='botones2'>
 
-            <input type="file" id="videoInput" accept="video/webm" onChange={handleVideoUpload} 
-              style={{display:'none'}}/>
-            <div
-            style={{color:formatColor("blanco"),
-                    backgroundColor:formatColor("cafe"),
-                    marginLeft:'1vw'
-            }} onClick={handleButtonClick}><strong>Cargar grabacion</strong></div>
-            
-            <div
-            style={{color:formatColor("blanco"),
-                    backgroundColor:formatColor("cafe"),
-                    marginLeft:'1vw'
-            }} onClick={borrarGrabacion}><strong>Eliminar grabacion</strong></div>
-            
-            <div
-            style={{color:formatColor("blanco"),
-                    backgroundColor:formatColor("cafe"),
-                    marginLeft:'1vw',
-            }} onClick={()=>props.setVentana("Inicio")}><strong>Volver al inicio</strong></div>
-          </div>
+      <Opciones setVentana={props.setVentana} />
+
+      <div style={{ display: 'flex', flexDirection: 'row' }}>
+        <div className='botones'>
+          <input type="file" id="videoInput" accept="video/webm" onChange={handleVideoUpload}
+            style={{ display: 'none' }} />
+          <div
+            style={{
+              color: formatColor("blanco"),
+              backgroundColor: formatColor("cafe"),
+              marginLeft: '1vw'
+            }} onClick={videoSrc ? borrarGrabacion : handleButtonClick}><strong>{videoSrc ? 'Limpiar visor' : 'Cargar grabacion'}</strong></div>
+
+          <div
+            style={{
+              color: formatColor("blanco"),
+              backgroundColor: formatColor("cafe"),
+              marginLeft: '1vw',
+            }} onClick={() => props.setVentana("Inicio")}><strong>Volver al inicio</strong></div>
         </div>
-        
-        <div className='ver' 
-        style={{backgroundColor: formatColor("blanco"),
-                border:'0.5vw solid'+ formatColor("cafe"),
-                color: formatColor("cafe")
-        }}>
-          
-          
 
-          {videoSrc ? (
+        <div style={{ marginLeft: 200, backgroundColor: formatColor("cafe"), marginTop: 50, borderRadius: 20 }}>
+          <div className='ver'
+            style={{
+              backgroundColor: formatColor("blanco"),
+              border: '0.5vw solid' + formatColor("cafe"),
+              color: formatColor("cafe"),
+              borderRadius: 100,
+            }}>
+
+            {videoSrc ? (
               <video controls>
-                <source src={videoSrc} type="video/webm" style={{width: '100%', height:'100%'}}/>
+                <source src={videoSrc} type="video/webm" style={{ width: '100%', height: '100%' }} />
                 Your browser does not support the video tag.
               </video>
-              ):<>
+            ) : <>
               Espacio para <br />
               visualizar la <br />
-              grabacion <br />
+              grabación <br />
               seleccionada <br /></>}
+          </div>
         </div>
+
 
 
       </div>
