@@ -83,7 +83,7 @@ export function Datos(props: propsVentanaDatos) {
     }
   }
     */
-  const [fileContent, setFileContent] = useState<string>('[{"name":"hola"}]');
+  const [fileContent, setFileContent] = useState<string>('');
   const [dragOver, setDragOver] = useState<boolean>(false);
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {

@@ -51,24 +51,24 @@ export function Stats(file: { fileCont: string }) {
     */
     //console.log(file.fileCont)
     useEffect(() => {
-        let tempdat = JSON.parse(file.fileCont) as datojson[]
-        // console.log(tempdat)
-        // console.log("tempdat")
-        setDat(tempdat)
-        // console.log("dat")
-        // console.log(dat)
-        // console.log("JSON")
-        // console.log(JSON.parse(fileCont) as datojson[])
+        try {
+            let tempdat = JSON.parse(file.fileCont) as datojson[]
+            // console.log(tempdat)
+            // console.log("tempdat")
+            setDat(tempdat)
+            // console.log("dat")
+            // console.log(dat)
+            // console.log("JSON")
+            // console.log(JSON.parse(fileCont) as datojson[])
 
 
-        // setAng1([])
-        // setAng2([])
-        // setDist([])
-        // setx([])
-        // sety([])
-        // sett([])
-
-
+            // setAng1([])
+            // setAng2([])
+            // setDist([])
+            // setx([])
+            // sety([])
+            // sett([])
+        } catch { }
     }, [file.fileCont])
     useEffect(() => {
         if ("A1" in dat[0]) {
