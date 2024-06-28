@@ -11,6 +11,8 @@ export function P3d(props: propsGraph) {
     y: [],
     z: [],
   });
+  const oneVh = window.innerHeight / 100;
+  const oneVw = window.innerWidth / 100;
   useEffect(() => {
     let index = 0;
     const interval = setInterval(() => {
@@ -42,7 +44,7 @@ export function P3d(props: propsGraph) {
       ]}
 
       layout={{
-        width: 700, height: 500, autosize: true,
+        width: oneVw*56, height: oneVh*75, autosize: true,
         margin: {
           l: 0,
           r: 0,

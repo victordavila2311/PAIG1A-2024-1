@@ -132,7 +132,7 @@ export function Datos(props: propsVentanaDatos) {
             }} onClick={() => props.setVentana("Inicio")}><strong>Volver al inicio</strong></div>
         </div>
 
-        <div style={{ marginLeft: 50, backgroundColor: formatColor("verde"), marginTop: 50, borderRadius: 20, height: '70vh', width: '100%' }}>
+        <div style={{ marginLeft: 30, backgroundColor: formatColor("verde"), marginTop: 50, borderRadius: 20, height: '76vh',width:'75vw', marginBottom:'10vh'}}>
           <Stats key={`StatsAlone${cant}`} fileCont={fileContent} />
         </div>
       </div>

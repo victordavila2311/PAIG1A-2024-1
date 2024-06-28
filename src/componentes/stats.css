@@ -1,6 +1,5 @@
 .estadistica{
     border-collapse: collapse;
-    width:50vw;
     margin-bottom: 0.5vw;
 }
 .grafica{
@@ -17,5 +16,5 @@
     height:40vh;
     display: flex;
     flex-direction: column;
-    overflow-y: scroll;
+    /*overflow-y: scroll;*/
 }
