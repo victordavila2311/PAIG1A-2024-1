@@ -212,17 +212,23 @@ export function Practica(props: propsVentanaPractica) {
               backgroundColor: formatColor("azul"),
             }} onClick={() => props.setVentana("Inicio")}><strong>Volver al inicio</strong></div>
         </div>
-        <div style={{marginLeft: 50, backgroundColor: formatColor("azul"), marginTop: 50, borderRadius: 20}}>
+        <div style={{marginLeft: '15vw', 
+                      backgroundColor: formatColor("azul"), 
+                      marginTop: 10, 
+                      borderRadius: '3vh', 
+                      marginBottom:'1.7vh', 
+                      width:'115vh',
+                      height:'95%'}}>
           <div className='camaras'
             style={{
               border: '10px solid ' + formatColor("azul"),
-              width: 900,
-              height: 550,
+              width: '105vh',
+              marginTop:'3vh'
             }}>
             <Webcam
               audio={false}
               width={'100%'}
-              height={'100%'}
+              height={'75%'}
               ref={webcamRef}
               screenshotFormat="image/jpeg"
               videoConstraints={{
@@ -233,12 +239,12 @@ export function Practica(props: propsVentanaPractica) {
           </div>
           <div
             style={{
-              width: '100%',
+              width: '90vh',
               backgroundColor: formatColor("azul"),
               marginLeft: 'auto',
               marginRight: 'auto',
               textAlign: 'center',
-              paddingBottom: '1vh',
+              marginBottom: '2vh',
               color: formatColor("blanco")
             }}><strong>Webcam</strong></div>
         </div>
