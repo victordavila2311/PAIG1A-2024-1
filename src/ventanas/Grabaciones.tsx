@@ -52,7 +52,7 @@ export function Grabaciones(props: propsVentanaGrabaciones) {
             }} onClick={() => props.setVentana("Inicio")}><strong>Volver al inicio</strong></div>
         </div>
 
-        <div style={{ marginLeft: 200, backgroundColor: formatColor("cafe"), marginTop: 50, borderRadius: 20 }}>
+        <div style={{ marginLeft: 200, backgroundColor: formatColor("cafe"), marginTop: 50, borderRadius: 20, marginBottom: '9.4vh'}}>
           <div className='ver'
             style={{
               backgroundColor: formatColor("blanco"),
