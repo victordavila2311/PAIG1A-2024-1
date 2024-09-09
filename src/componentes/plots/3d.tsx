@@ -26,7 +26,7 @@ export function P3d(props: propsGraph) {
       } else {
         clearInterval(interval);
       }
-    }, 10);
+    }, 1);
 
     return () => clearInterval(interval);
   }, [props]);

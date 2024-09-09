@@ -81,8 +81,8 @@ export function Stats(file: { fileCont: string }) {
                 data["D"]=L-data["D"]
                 data["D"]=data["D"]<0?0:data["D"]
                 //A1 es alfa A2 es gamma
-                tempang1.push(data["A1"])
-                tempang2.push(data["A2"])
+                tempang1.push(data["A1"]/12)
+                tempang2.push(data["A2"]/12)
                 tempdist.push(data["D"])
                 let A1rad = data["A1"] * Math.PI / (180*12)
                 let A2rad = data["A2"] * Math.PI / (180*12)
@@ -100,14 +100,18 @@ export function Stats(file: { fileCont: string }) {
                     tempy.push(Math.sin(A1rad) * data["D"])
                     tempz.push(Math.cos(A1rad) * data["D"]*-1)
                 } else {
-                    let xt: number = data["D"] / (Math.sqrt(1 + ((Math.tan(Math.PI - A2rad) ** 2) / (Math.tan(Math.PI - A1rad) ** 2)) + Math.tan(Math.PI - A2rad) ** 2))
+                    // let xt: number = data["D"] / (Math.sqrt(1 + ((Math.tan(Math.PI - A2rad) ** 2) / (Math.tan(Math.PI - A1rad) ** 2)) + Math.tan(Math.PI - A2rad) ** 2))
+                    // tempx.push(xt)
+                    // tempy.push(xt * Math.tan(Math.PI - A2rad) / Math.tan(Math.PI - A1rad))
+                    // tempz.push(xt * Math.tan(Math.PI - A2rad)*-1)
+                    let xt: number = data["D"] / (Math.sqrt(1 + ((Math.tan(A1rad) ** 2) / (Math.tan(A2rad) ** 2)) + (1/Math.tan(A2rad)) ** 2))
                     tempx.push(xt)
-                    tempy.push(xt * Math.tan(Math.PI - A2rad) / Math.tan(Math.PI - A1rad))
-                    tempz.push(xt * Math.tan(Math.PI - A2rad)*-1)
+                    tempy.push(xt * Math.tan(A1rad) / Math.tan(A2rad))
+                    tempz.push(xt / Math.tan(A2rad)*-1)
                 }
 
 
-                tempt.push(idx * 0.1)
+                tempt.push(idx * 1)
 
 
             })

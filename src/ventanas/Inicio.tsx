@@ -16,16 +16,15 @@ export function Inicio(props: propsVentanaInicio) {
         setTutorial(prevState=>!prevState)
       }}>🛈</div>
       {tutorial?<div className='instrucciones' style={{backgroundColor:formatColor("blanco"), borderColor: formatColor('main')}}>
-      <iframe style={{marginTop:'1vh', marginBottom:'1vh'}} width="560" height="315" src="https://www.youtube.com/embed/V5h6MUZEW6o?si=1pK4y3VSejGBkZAo" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
-      
-      <a href={require('../pdf/PAI241G1A-Simulador Laparoscopia - Funciones.pdf')} download>
+      <iframe style={{marginTop:'1vh', marginBottom:'1vh'}} width="560" height="315" src="https://www.youtube.com/embed/Wq6RMd74TaU?si=k-UEhVkVm3skjOLl" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+      <a href={require('../pdf/Manual.pdf')} download>
       <div className='descarga'
       style={{
         color: formatColor("blanco"),
         backgroundColor: formatColor("main"),
       }}><strong>Descargar Instructivo</strong></div></a>
       </div>:<></>}
-      <img src={require('../Img/foto_prototipo.jpg')} alt="imagen simulador" style={{height:'56vh', borderRadius:'1vh'}} />
+      <img src={require('../Img/foto_simulador.png')} alt="imagen simulador" style={{height:'56vh', borderRadius:'1vh'}} />
       <Boton
         color={'main'}
         texto={'Iniciar simulador'}
