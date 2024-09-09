@@ -1,19 +1,19 @@
 {
   "files": {
     "main.css": "/PAIG1A-2024-1/static/css/main.38e94d72.css",
-    "main.js": "/PAIG1A-2024-1/static/js/main.c82be5ed.js",
+    "main.js": "/PAIG1A-2024-1/static/js/main.aaec6c59.js",
+    "static/media/Manual.pdf": "/PAIG1A-2024-1/static/media/Manual.4a5c0db9c92ba72d44aa.pdf",
+    "static/media/foto_simulador.png": "/PAIG1A-2024-1/static/media/foto_simulador.c1bcb53cedfb796eb98a.png",
     "static/media/FondoInicio.png": "/PAIG1A-2024-1/static/media/FondoInicio.9a2f4062960098a1d1d9.png",
     "static/media/FondoDatos.jpg": "/PAIG1A-2024-1/static/media/FondoDatos.48c64ea0d7fb14c10025.jpg",
-    "static/media/foto_prototipo.jpg": "/PAIG1A-2024-1/static/media/foto_prototipo.90370897a5e81e8fcb0b.jpg",
     "static/media/FondoPractica.jpg": "/PAIG1A-2024-1/static/media/FondoPractica.3a3e78a63bb2930ffb72.jpg",
     "static/media/FondoGrabaciones.jpg": "/PAIG1A-2024-1/static/media/FondoGrabaciones.8775f192845935b64059.jpg",
-    "static/media/PAI241G1A-Simulador Laparoscopia - Funciones.pdf": "/PAIG1A-2024-1/static/media/PAI241G1A-Simulador Laparoscopia - Funciones.0d989231d3c0fe1ade75.pdf",
     "index.html": "/PAIG1A-2024-1/index.html",
     "main.38e94d72.css.map": "/PAIG1A-2024-1/static/css/main.38e94d72.css.map",
-    "main.c82be5ed.js.map": "/PAIG1A-2024-1/static/js/main.c82be5ed.js.map"
+    "main.aaec6c59.js.map": "/PAIG1A-2024-1/static/js/main.aaec6c59.js.map"
   },
   "entrypoints": [
     "static/css/main.38e94d72.css",
-    "static/js/main.c82be5ed.js"
+    "static/js/main.aaec6c59.js"
   ]
 }
